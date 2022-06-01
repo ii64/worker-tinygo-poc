@@ -1,0 +1,15 @@
+name = "tinygo"
+type = "webpack"
+route = ''
+zone_id = ''
+usage_model = ''
+compatibility_flags = []
+workers_dev = true
+compatibility_date = "2022-05-31"
+webpack_config = "webpack.config.js"
+
+
+wasm_modules = { wasm = "./build/main.wasm" }
+
+
+account_id = "f998f5705e389a633ba8a8fc470be2ff"

@@ -1,0 +1,16 @@
+<html><head><title>Demo tinygo {{version}}</title></head>
+<body>
+<pre>
+Tinygo {{version}}
+NumGoroutine: {{num_goroutine}}
+GOARCH: {{goarch}}
+GOOS: {{goos}}
+</pre>
+<input type="text" id="input_text">
+<img src="/genqr?q=hello world" id="disp">
+<script>
+input_text.addEventListener("change", function(e) {
+    disp.src = "/genqr?q=" + input_text.value;
+});
+</script>
+</body></html>
