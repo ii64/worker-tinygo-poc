@@ -11,21 +11,21 @@ import (
 
 func main() {
 	initHandler()
+	jreq := predefObjValue(7)
+	jres := jreq.Get("response")
 
-	req := predefObjValue(7)
-	res := req.Get("response")
+	method := jreq.Get("method").String()
+	url := jreq.Get("url").String()
 
-	method := req.Get("method").String()
-	url := req.Get("url").String()
-
-	{
-		req, err := httpx.NewRequest(method, url, nil)
-		if err != nil {
-			panic("cannot parse request: " + err.Error())
-		}
-		resWriter := httpx.NewResponseWriter(res)
-		Handler(resWriter, req)
+	req, err := httpx.NewRequest(method, url, nil)
+	if err != nil {
+		panic("cannot parse request: " + err.Error())
 	}
+	if err = req.ApplyFrom(jreq); err != nil {
+		panic("cannot apply from binding: " + err.Error())
+	}
+	resWriter := httpx.NewResponseWriter(jres)
+	Handler(resWriter, req)
 }
 
 // predefObjValue

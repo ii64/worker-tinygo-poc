@@ -8,8 +8,6 @@ import (
 	"syscall/js"
 )
 
-var Uint8Array = js.Global().Get("Uint8Array")
-
 type Buffer struct {
 	bytes.Buffer
 	closerFunc func(data js.Value) error

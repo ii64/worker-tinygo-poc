@@ -9,6 +9,8 @@ type Request struct {
 	Method string
 	URL    *url.URL
 	Body   io.Reader
+
+	header HeaderImplementer
 }
 
 func NewRequest(method string, url_ string, body io.Reader) (*Request, error) {
@@ -21,4 +23,8 @@ func NewRequest(method string, url_ string, body io.Reader) (*Request, error) {
 		URL:    parsedUrl,
 		Body:   body,
 	}, nil
+}
+
+func (r *Request) Header() HeaderImplementer {
+	return r.header
 }

@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"embed"
 	"fmt"
+	"html"
 	"runtime"
 	"strconv"
 	"template/src/httpx"
+	"time"
 
 	qrcode "github.com/skip2/go-qrcode"
 )
@@ -31,6 +33,14 @@ func pageIndex(w httpx.ResponseWriter, r *httpx.Request) {
 	bs = bytes.Replace(bs, []byte("{{goarch}}"), []byte(runtime.GOARCH), -1)
 	bs = bytes.Replace(bs, []byte("{{goos}}"), []byte(runtime.GOOS), -1)
 
+	now := time.Now()
+	bs = bytes.Replace(bs, []byte("{{time_formatted}}"), []byte(now.String()), -1)
+	bs = bytes.Replace(bs, []byte("{{timestamp}}"), []byte(strconv.FormatInt(now.UnixNano(), 10)), -1)
+
+	bs = bytes.Replace(bs, []byte("{{user_agent}}"), []byte(
+		fmt.Sprintf("%q", html.EscapeString(r.Header().Get("User-Agent")))), -1)
+
+	w.Header().Set("X-Demo", "Yes")
 	w.Write(bs)
 }
 
